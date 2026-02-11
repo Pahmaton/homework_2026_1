@@ -24,4 +24,36 @@ QUnit.module('Тестируем функцию filterObjectByKeys', () => {
 
         assert.deepEqual(result, { a: 1 }, 'Отсутствующие ключи должны быть проигнорированы');
     });
+
+    QUnit.test('Возвращает пустой объект, если массив ключей пуст', (assert) => {
+        const originalObject = { a: 1, b: 2 };
+        const keysToFilter = [];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, {}, 'Результат должен быть пустым объектом {}');
+    });
+
+    QUnit.test('Возвращает пустой объект, если исходный объект пуст', (assert) => {
+        const originalObject = {};
+        const keysToFilter = ['a', 'b'];
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, {}, 'Результат должен быть пустым объектом, так как ключей нет в источнике');
+    });
+
+    QUnit.test('Сохраняет ссылки на вложенные объекты', (assert) => {
+        const nestedObj = { x: 10 };
+        const originalObject = { a: 1, b: nestedObj };
+        const keysToFilter = ['b'];
+        
+        const result = filterObjectByKeys(originalObject, keysToFilter);
+
+        assert.deepEqual(result, { b: { x: 10 } }, 'Структура объекта верна');
+        
+        assert.strictEqual(result.b, originalObject.b, 'Вложенный объект должен быть скопирован по ссылке');
+        
+        nestedObj.x = 20;
+        assert.strictEqual(result.b.x, 20, 'Изменение исходного вложенного объекта должно отражаться в результате');
+    });
+
 });
