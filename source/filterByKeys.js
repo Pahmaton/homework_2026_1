@@ -21,10 +21,10 @@ const filterObjectByKeys = function (obj, keys) {
         return {};
     }
 
-    return keys.reduce((new_obj, key) => {
+    return keys.reduce((newObj, key) => {
         if (key in obj) {
-            new_obj[key] = obj[key];
+            newObj[key] = obj[key];
         }
-        return new_obj;
+        return newObj;
     }, {});
 };
