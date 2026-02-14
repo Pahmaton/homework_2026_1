@@ -56,4 +56,30 @@ QUnit.module('Тестируем функцию filterObjectByKeys', () => {
         assert.strictEqual(result.b.x, 20, 'Изменение исходного вложенного объекта должно отражаться в результате');
     });
 
+    QUnit.test('Возвращает пустой объект, если вместо объекта передан null', (assert) => {
+        const result = filterObjectByKeys(null, ['a']);
+        assert.deepEqual(result, {}, 'Должен вернуть {} при null');
+    });
+
+    QUnit.test('Возвращает пустой объект, если вместо объекта undefined', (assert) => {
+        const result = filterObjectByKeys(undefined, ['a']);
+        assert.deepEqual(result, {}, 'Должен вернуть {} при undefined');
+    });
+
+    QUnit.test('Возвращает пустой объект, если передана строка вместо объекта', (assert) => {
+        const result = filterObjectByKeys('not an object', ['a']);
+        assert.deepEqual(result, {}, 'Должен вернуть {} при неверном типе первого аргумента');
+    });
+
+    QUnit.test('Возвращает пустой объект, если keys не является массивом', (assert) => {
+        const originalObject = { a: 1 };
+        const result = filterObjectByKeys(originalObject, 'not-an-array');
+        assert.deepEqual(result, {}, 'Должен вернуть {}, если keys не массив');
+    });
+    
+    QUnit.test('Возвращает пустой объект, если keys равен null', (assert) => {
+        const originalObject = { a: 1 };
+        const result = filterObjectByKeys(originalObject, null);
+        assert.deepEqual(result, {}, 'Должен вернуть {}, если keys is null');
+    });
 });

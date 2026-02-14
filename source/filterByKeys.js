@@ -14,11 +14,17 @@
  * @returns {Object} Новый объект с отфильтрованными свойствами.
  */
 const filterObjectByKeys = function (obj, keys) {
-    let new_obj = {};
-    for (let key of keys) {
+    if (!obj || typeof obj !== 'object' || obj === null) {
+        return {};
+    }
+    if (!Array.isArray(keys)) {
+        return {};
+    }
+
+    return keys.reduce((new_obj, key) => {
         if (key in obj) {
             new_obj[key] = obj[key];
         }
-    }
-    return new_obj;
+        return new_obj;
+    }, {});
 };
