@@ -13,7 +13,7 @@
  * 
  * @returns {Object} Новый объект с отфильтрованными свойствами.
  */
-const filterObjectByKeys = function (obj, keys) {
+const filterObjectByKeys = (obj, keys) => {
     if (!obj || typeof obj !== 'object' || obj === null) {
         return {};
     }
@@ -22,7 +22,7 @@ const filterObjectByKeys = function (obj, keys) {
     }
 
     return keys.reduce((newObj, key) => {
-        if (key in obj) {
+        if (Object.hasOwn(obj, key)) {
             newObj[key] = obj[key];
         }
         return newObj;
